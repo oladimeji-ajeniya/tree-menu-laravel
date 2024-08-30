@@ -62,7 +62,9 @@ class MenuController extends Controller
             $treeData = $this->menuService->getCollasableMenu();
             return response()->json($treeData);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch collapsible menus'], 500);
+            return response()->json([
+                'error' => 'Failed to fetch collapsible menus',
+            ], 500);
         }
     }
 
@@ -78,7 +80,9 @@ class MenuController extends Controller
             $menu = $this->menuService->getMenuById($id);
             return response()->json([$menu]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch menu'], 500);
+            return response()->json([
+                'error' => 'Failed to fetch menu',
+            ], 500);
         }
     }
 
@@ -96,9 +100,12 @@ class MenuController extends Controller
             $menu = $this->menuService->createMenu($validatedData);
             return response()->json($menu, 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to process request'], 500);
+            return response()->json([
+                'error' => 'Failed to process request',
+            ], 500);
         }
     }
+
 
     /**
      * Update an existing menu.
@@ -114,7 +121,9 @@ class MenuController extends Controller
             $menu = $this->menuService->updateMenu($id, $validatedData);
             return response()->json($menu);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to update menu'], 500);
+            return response()->json([
+                'error' => 'Failed to update menu',
+            ], 500);
         }
     }
 
@@ -130,7 +139,9 @@ class MenuController extends Controller
             $this->menuService->deleteMenu($id);
             return response()->json(['message' => 'Menu deleted successfully']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete menu'], 500);
+            return response()->json([
+                'error' => 'Failed to delete menu',
+            ], 500);
         }
     }
 }

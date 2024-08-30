@@ -48,14 +48,18 @@ class MenuService
 
     public function createMenu($data)
     {
-        $menu = Menu::where('uuid', $data['uuid'])->first();
+        if (isset($data['uuid'])) {
+            $menu = Menu::where('uuid', $data['uuid'])->first();
+        }
 
-        if ($menu) {
+        if (isset($menu)) {
+            $data['slug'] = $this->generateUniqueSlug($data['name']);
             $menu->update($data);
             return $menu;
-        } else {
-            return Menu::create($data);
         }
+
+        $data['slug'] = $this->generateUniqueSlug($data['name']);
+        return Menu::create($data);
     }
 
     public function updateMenu($id, $data)
@@ -70,5 +74,18 @@ class MenuService
         $menu = Menu::findOrFail($id);
         $menu->delete();
         return $menu;
+    }
+    private function generateUniqueSlug(string $name): string
+    {
+        $slug = \Str::slug($name);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (Menu::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 }

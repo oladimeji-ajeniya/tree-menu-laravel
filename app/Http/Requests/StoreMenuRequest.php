@@ -14,11 +14,11 @@ class StoreMenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'uuid' => 'required|string|max:255',
+            'uuid' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255',
             'parent_id' => 'nullable|exists:menus,id',
-            'order' => 'required|integer',
+            'order' => 'nullable|integer',
         ];
     }
 }
